@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiscountHub - Save on Your Favorite Stores</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #ff6b6b;
+            --dark-color: #2c3e50;
+            --light-color: #f8f9fa;
+            --success-color: #28a745;
+            --budget-color: #ffc107;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #6c5ce7);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary-color);
+        }
+        
+        .search-bar {
+            flex-grow: 1;
+            margin: 0 30px;
+            position: relative;
+            max-width: 600px;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: none;
+            font-size: 1rem;
+            outline: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-bar button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .search-bar button:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+        
+        /* Cookie Banner */
+        #cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--dark-color);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        #cookie-banner p {
+            margin-right: 20px;
+        }
+        
+        #cookie-banner a {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        #accept-cookies {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero Banner */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero-btn:hover {
+            background-color: #ff5252;
+            transform: translateY(-3px);
+        }
+        
+        /* Categories Section */
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+        
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .category-card h3 {
+            font-size: 1rem;
+            color: var(--dark-color);
+        }
+        
+        /* Featured Stores */
+        .featured-stores {
+            margin-bottom: 40px;
+        }
+        
+        .stores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .store-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .store-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .store-img {
+            height: 120px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .store-img img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+        }
+        
+        .store-info {
+            padding: 15px;
+        }
+        
+        .store-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .coupon-count {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        /* Amazon Disclaimer */
+        .amazon-disclaimer {
+            background: #f0f2f5;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        
+        /* Budget Buys Section */
+        .budget-buys {
+            margin-bottom: 40px;
+        }
+        
+        .budget-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--budget-color);
+            color: var(--dark-color);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        /* Recommended Items */
+        .recommended-items {
+            margin-bottom: 40px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-img {
+            height: 180px;
+            background-color: #f5f7fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-img img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+        
+        .product-info {
+            padding: 15px;
+        }
+        
+        .product-info h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: var(--dark-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .product-price {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .current-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .original-price {
+            font-size: 0.9rem;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 8px;
+        }
+        
+        .discount-badge {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: auto;
+        }
+        
+        .coupon-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .coupon-btn:hover {
+            background-color: #3a5bef;
+        }
+        
+        /* Coupon Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            position: relative;
+            animation: slideUp 0.4s;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: var(--secondary-color);
+        }
+        
+        .coupon-code {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .coupon-code span {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+        }
+        
+        .copy-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background-color: #3a5bef;
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .modal-btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .visit-store {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+        }
+        
+        .visit-store:hover {
+            background-color: #ff5252;
+        }
+        
+        .close-btn {
+            background-color: transparent;
+            border: 1px solid #ddd;
+        }
+        
+        .close-btn:hover {
+            background-color: #f8f9fa;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .legal-disclaimers {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        
+        .legal-disclaimers a {
+            color: #ddd;
+            text-decoration: none;
+        }
+        
+        .legal-disclaimers a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            margin-top: 15px;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+                justify-content: center;
+            }
+            
+            .search-bar {
+                margin: 15px 0;
+                max-width: 100%;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+                padding: 0 15px;
+            }
+            
+            #cookie-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            #cookie-banner p {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner">
+        <p>We use cookies to personalize content and analyze traffic. By continuing to use our site, you agree to our <a href="/privacy">Privacy Policy</a>.</p>
+        <button id="accept-cookies">Accept</button>
+    </div>
+    
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <i class="fas fa-tags"></i>
+                DiscountHub
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search for stores, coupons or products...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="hero pulse">
+            <h1>Save Big on Your Favorite Stores</h1>
+            <p>Discover thousands of coupons, promo codes and deals updated daily</p>
+            <button class="hero-btn">Explore Deals</button>
+        </section>
+        
+        <section class="categories-section">
+            <h2 class="section-title">Popular Categories</h2>
+            <div class="categories">
+                <div class="category-card">
+                    <i class="fas fa-shopping-bag"></i>
+                    <h3>Fashion</h3>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-laptop"></i>
+                    <h3>Electronics</h3>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-home"></i>
+                    <h3>Home & Garden</h3>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-utensils"></i>
+                    <h3>Food & Dining</h3>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-plane"></i>
+                    <h3>Travel</h3>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>Games & Toys</h3>
+                </div>
+            </div>
+        </section>
+        
+        <section class="featured-stores">
+            <h2 class="section-title">Featured Stores</h2>
+            <div class="stores-grid">
+                <div class="store-card">
+                    <div class="store-img">
+                        <img src="https://logo.clearbit.com/amazon.com" alt="Amazon">
+                    </div>
+                    <div class="store-info">
+                        <h3>Amazon</h3>
+                        <p class="coupon-count">24 Coupons</p>
+                    </div>
+                </div>
+                <div class="store-card">
+                    <div class="store-img">
+                        <img src="https://logo.clearbit.com/noon.com" alt="Noon">
+                    </div>
+                    <div class="store-info">
+                        <h3>Noon</h3>
+                        <p class="coupon-count">18 Coupons</p>
+                    </div>
+                </div>
+                <div class="store-card">
+                    <div class="store-img">
+                        <img src="https://logo.clearbit.com/namshi.com" alt="Namshi">
+                    </div>
+                    <div class="store-info">
+                        <h3>Namshi</h3>
+                        <p class="coupon-count">15 Coupons</p>
+                    </div>
+                </div>
+                <div class="store-card">
+                    <div class="store-img">
+                        <img src="https://logo.clearbit.com/aliexpress.com" alt="AliExpress">
+                    </div>
+                    <div class="store-info">
+                        <h3>AliExpress</h3>
+                        <p class="coupon-count">22 Coupons</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Amazon Associates Disclaimer -->
+            <div class="amazon-disclaimer">
+                <small>*As an Amazon Associate, DiscountHub earns from qualifying purchases. Amazon and the Amazon logo are trademarks of Amazon.com, Inc.</small>
+            </div>
+        </section>
+        
+        <section class="budget-buys">
+            <h2 class="section-title">Budget Buys</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="budget-tag">Under $50</div>
+                    <div class="product-img">
+                        <img src="https://m.media-amazon.com/images/I/61bK6PMOC3L._AC_UL320_.jpg" alt="Wireless Earbuds">
+                    </div>
+                    <div class="product-info">
+                        <h3>Wireless Bluetooth Earbuds</h3>
+                        <div class="product-price">
+                            <span class="current-price">$29.99</span>
+                            <span class="original-price">$59.99</span>
+                            <span class="discount-badge">50% OFF</span>
+                        </div>
+                        <button class="coupon-btn">Get Coupon</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="budget-tag">Under $30</div>
+                    <div class="product-img">
+                        <img src="https://m.media-amazon.com/images/I/71S5+CElVtL._AC_UL320_.jpg" alt="Smart Watch">
+                    </div>
+                    <div class="product-info">
+                        <h3>Fitness Tracker Smart Watch</h3>
+                        <div class="product-price">
+                            <span class="current-price">$25.99</span>
+                            <span class="original-price">$49.99</span>
+                            <span class="discount-badge">48% OFF</span>
+                        </div>
+                        <button class="coupon-btn">Get Coupon</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="budget-tag">Under $20</div>
+                    <div class="product-img">
+                        <img src="https://m.media-amazon.com/images/I/71OZY036QVL._AC_UL320_.jpg" alt="Power Bank">
+                    </div>
+                    <div class="product-info">
+                        <h3>10000mAh Power Bank</h3>
+                        <div class="product-price">
+                            <span class="current-price">$18.99</span>
+                            <span class="original-price">$29.99</span>
+                            <span class="discount-badge">37% OFF</span>
+                        </div>
+                        <button class="coupon-btn">Get Coupon</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="budget-tag">Under $40</div>
+                    <div class="product-img">
+                        <img src="https://m.media-amazon.com/images/I/61+Q6RhU6UL._AC_UL320_.jpg" alt="Backpack">
+                    </div>
+                    <div class="product-info">
+                        <h3>Travel Laptop Backpack</h3>
+                        <div class="product-price">
+                            <span class="current-price">$35.99</span>
+                            <span class="original-price">$59.99</span>
+                            <span class="discount-badge">40% OFF</span>
+                        </div>
+                        <button class="coupon-btn">Get Coupon</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Amazon Associates Disclaimer -->
+            <div class="amazon-disclaimer">
+                <small>Prices are accurate at time of publication. Product availability and deals may change. As an Amazon Associate, DiscountHub earns from qualifying purchases.</small>
+            </div>
+        </section>
+        
+        <section class="recommended-items">
+            <h2 class="section-title">Recommended For You</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://m.media-amazon.com/images/I/71TPda7cwUL._AC_UL320_.jpg" alt="Air Fryer">
+                    </div>
+                    <div class="product-info">
+                        <h3>5.5L Digital Air Fryer</h3>
+                        <div class="product-price">
+                            <span class="current-price">$89.99</span>
+                            <span class="original-price">$129.99</span>
+                            <span class="discount-badge">31% OFF</span>
+                        </div>
+                        <button class="coupon-btn">Get Coupon</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://m.media-amazon.com/images/I/71WkDp+uqSL._AC_UL320_.jpg" alt="Robot Vacuum">
+                    </div>
+                    <div class="product-info">
+                        <h3>Smart Robot Vacuum Cleaner</h3>
+                        <div class="product-price">
+                            <span class="current-price">$199.99</span>
+                            <span class="original-price">$299.99</span>
+                            <span class="discount-badge">33% OFF</span>
+                        </div>
+                        <button class="coupon-btn">Get Coupon</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://m.media-amazon.com/images/I/71s1LRpaprL._AC_UL320_.jpg" alt="Coffee Maker">
+                    </div>
+                    <div class="product-info">
+                        <h3>Programmable Coffee Maker</h3>
+                        <div class="product-price">
+                            <span class="current-price">$49.99</span>
+                            <span class="original-price">$79.99</span>
+                            <span class="discount-badge">38% OFF</span>
+                        </div>
+                        <button class="coupon-btn">Get Coupon</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://m.media-amazon.com/images/I/71Ie3JXGfVL._AC_UL320_.jpg" alt="Bluetooth Speaker">
+                    </div>
+                    <div class="product-info">
+                        <h3>Portable Bluetooth Speaker</h3>
+                        <div class="product-price">
+                            <span class="current-price">$39.99</span>
+                            <span class="original-price">$59.99</span>
+                            <span class="discount-badge">33% OFF</span>
+                        </div>
+                        <button class="coupon-btn">Get Coupon</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Coupon Modal -->
+    <div class="modal" id="couponModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Your Coupon Code</h2>
+            <p>Copy this code and use it at checkout to get your discount</p>
+            <div class="coupon-code">
+                <span id="couponCode">SAVE20</span>
+                <button class="copy-btn" id="copyBtn">Copy</button>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn visit-store">Visit Store</button>
+                <button class="modal-btn close-btn">Close</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>DiscountHub</h3>
+                <p>Your one-stop destination for the best coupons, promo codes and deals from your favorite stores.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#">Fashion</a></li>
+                    <li><a href="#">Electronics</a></li>
+                    <li><a href="#">Home & Garden</a></li>
+                    <li><a href="#">Food & Dining</a></li>
+                    <li><a href="#">Travel</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Popular Stores</h3>
+                <ul>
+                    <li><a href="#">Amazon</a></li>
+                    <li><a href="#">Noon</a></li>
+                    <li><a href="#">Namshi</a></li>
+                    <li><a href="#">AliExpress</a></li>
+                    <li><a href="#">Shein</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="legal-disclaimers">
+            <p>As an Amazon Associate, DiscountHub earns from qualifying purchases. Amazon and the Amazon logo are trademarks of Amazon.com, Inc.</p>
+            <p>All coupons are verified daily. We do not engage in cookie stuffing or misleading promotions.</p>
+            <p>Participation in the Amazon Associates Program may be terminated at any time.</p>
+            <p><a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of Service</a></p>
+            <p class="copyright">&copy; 2023 DiscountHub. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Cookie Consent
+        const cookieBanner = document.getElementById('cookie-banner');
+        const acceptCookies = document.getElementById('accept-cookies');
+        
+        if (localStorage.getItem('cookiesAccepted')) {
+            cookieBanner.style.display = 'none';
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieBanner.style.display = 'none';
+        });
+        
+        // Modal functionality
+        const modal = document.getElementById('couponModal');
+        const couponBtns = document.querySelectorAll('.coupon-btn');
+        const closeModal = document.querySelector('.close-modal');
+        const closeBtn = document.querySelector('.close-btn');
+        const copyBtn = document.getElementById('copyBtn');
+        const couponCode = document.getElementById('couponCode');
+        
+        // Open modal when any coupon button is clicked
+        couponBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        // Close modal
+        function closeModalFunc() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        closeModal.addEventListener('click', closeModalFunc);
+        closeBtn.addEventListener('click', closeModalFunc);
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModalFunc();
+            }
+        });
+        
+        // Copy coupon code
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(couponCode.textContent);
+            copyBtn.textContent = 'Copied!';
+            setTimeout(() => {
+                copyBtn.textContent = 'Copy';
+            }, 2000);
+        });
+        
+        // Animate elements when scrolling
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.category-card, .store-card, .product-card');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        // Set initial state for animation
+        document.querySelectorAll('.category-card, .store-card, .product-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+        
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+    </script>
+</body>
+</html>
