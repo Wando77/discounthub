@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DiscountHub</title>
+    <link href="assets/style.css" rel="stylesheet">
+</head>
+<body>
+    <h1>Welcome to My Coupon Site!</h1>
+    <!-- Your content -->
+    <script src="assets/script.js"></script>
+</body>
+</html>
